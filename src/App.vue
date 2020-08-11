@@ -53,6 +53,7 @@ export default {
   updated() {
     console.log(this.info);
     console.log(Object.keys(this.info.contents).length);
+    console.log("aaa")
   },
 };
 </script>

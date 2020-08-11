@@ -19,7 +19,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      data: String
+    };
   },
   props: {
     info: {},
@@ -52,9 +54,6 @@ export default {
     console.log(clone.clientHeight)
     console.log(targetElement.clientHeight)
     targetElement.innerHTML = clone.innerHTML;
-
-    var parent = document.getElementsByClassName("shortcut")[0].parentNode;
-    console.log('parent', parent); // <ul id="parent">...</ul>
 
     clone.parentNode.removeChild(clone);
   }
