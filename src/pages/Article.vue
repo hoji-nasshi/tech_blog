@@ -26,37 +26,40 @@ export default {
   },
   filters: {
     dateFormat: function(value) {
-      //APIで取得した日付を整形
-      if (!value) return ""; //valueに何も入っていなければ''を返す
+      // 日付をフォーマット
+      if (!value) return "";
       value = value.substr(0, 10);
       return value;
     },
   },
   updated(){
-    let targetElement = document.getElementsByClassName("shortcut")[1];
-    let targetElementHeight = Number(window.getComputedStyle(targetElement).height.toString().slice(0,-2));
-    let targetText = targetElement.textContent.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,''); // HTMLタグを除去して取得
-    //const targetInnerHTML = targetElement.innerHTML;
-    const clone = targetElement.cloneNode(true);
-    clone.style.visibility  = "hidden";
-    clone.style.position    = "absolute";
-    clone.style.overflow    = "visible";
-    clone.style.width       = `${targetElement.clientWidth}px`;
-    clone.style.height      = "auto";
-    targetElement.insertAdjacentElement("afterend", clone);
+    // 枠から文字がはみださないように
+    let targetElement = document.getElementsByClassName("shortcut");
 
-    while((targetText.length > 0) && (clone.clientHeight > targetElementHeight)) {
-      targetText = targetText.substr(0, targetText.length - 1);
-      clone.innerHTML = `${targetText}...`;
+    for(let target of targetElement){
+      let targetHeight = Number(window.getComputedStyle(target).height.toString().slice(0,-2));
+      let targetText = target.textContent.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,''); // HTMLタグを除去して取得
+
+      // 対象のElementのクローンを理想の形になるようブラッシュアップ。
+      let clone = target.cloneNode(true);
+      clone.style.visibility  = "hidden";
+      clone.style.position    = "absolute";
+      clone.style.overflow    = "visible";
+      clone.style.width       = `${target.clientWidth}px`;
+      clone.style.height      = "auto";
+
+      target.insertAdjacentElement("afterend", clone);
+
+        // 理想の形になるまで文字を減らして調整。
+        while((targetText.length > 0) && (clone.clientHeight > targetHeight)) {
+          targetText = targetText.substr(0, targetText.length - 1);
+          clone.innerHTML = `${targetText}...`;
+        }
+      // 理想の形になったクローンを元Elementに置き換える。
+      target.innerHTML = clone.innerHTML;
+      // クローンさん、お疲れ様。
+      clone.parentNode.removeChild(clone);
     }
-    console.log(clone.clientHeight)
-    console.log(targetElement.clientHeight)
-    targetElement.innerHTML = clone.innerHTML;
-
-    var parent = document.getElementsByClassName("shortcut")[0].parentNode;
-    console.log('parent', parent); // <ul id="parent">...</ul>
-
-    clone.parentNode.removeChild(clone);
   }
 };
 </script>
