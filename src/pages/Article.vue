@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="this.info">
     <article class="article" v-for="item in this.info.contents" :key="item.id">
       <router-link :to="{name:'Article',params:{id:item.id}}">
         <figure class="article-figure">
