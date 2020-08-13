@@ -1,6 +1,11 @@
 <template>
   <div>
-    <p>{{ this.msg }}</p>
+    <div>
+      <p>{{ this.item.postedDate | dateFormat }}</p>
+      <h1>{{ this.item.title }}</h1>
+      <p>{{ this.item.tag }}</p>
+      <p>{{ this.item.content }}</p>
+    </div>
   </div>
 </template>
 
@@ -8,13 +13,21 @@
 export default {
   components: {},
   props: {
-    content: {},
+    item: {},
   },
   data() {
-    return {
-      //msg: this.info.contents[1].content,
-      msg: this.content,
-    };
+    return {};
+  },
+  filters: {
+    dateFormat: function(value) {
+      // 日付をフォーマット
+      if (!value) return "";
+      value = value.substr(0, 10);
+      return value;
+    },
+  },
+  mounted() {
+    console.log(this.item);
   },
 };
 </script>

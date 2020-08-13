@@ -1,18 +1,22 @@
 <template>
   <div id="header">
     <div id="header_top">
-      <span id="header_title">TECH-BLOG</span><br>
+      <span id="header_title">TECH-BLOG</span><br />
       <span id="header_copy">毎日投稿</span>
     </div>
     <nav>
-	<ul>
-		<li>プロフィール</li>
-		<li>当サイト</li>
-		<li>記事一覧</li>
-		<li>コンタクト</li>
-		<li>お知らせ</li>
-	</ul>
-</nav>
+      <ul>
+        <li>プロフィール</li>
+        <li>当サイト</li>
+        <router-link to="/article" tag="li">
+          <a>
+            記事一覧
+          </a>
+        </router-link>
+        <li>コンタクト</li>
+        <li>お知らせ</li>
+      </ul>
+    </nav>
   </div>
 </template>
 <script>
@@ -40,32 +44,36 @@ export default {};
 }
 /* ヘッダーコピー */
 #header_copy {
-	border-bottom: 1px dashed #000000;
-	font-size: 15px;
-	padding-bottom: 5px;
+  border-bottom: 1px dashed #000000;
+  font-size: 15px;
+  padding-bottom: 5px;
 }
 /* ヘッダー内のメニュー */
 #header nav {
-	height: 60px;
-	margin: 0 auto;
-	width: 1150px;
+  height: 60px;
+  margin: 0 auto;
+  width: 1150px;
 }
 #header nav ul {
-	height: 40px;
-	margin: 10px 0px 0px 0px;
-	padding-left: 0px;
+  height: 40px;
+  margin: 10px 0px 0px 0px;
+  padding-left: 0px;
 }
 #header nav ul li {
-	border-right: 1px solid #8D8D8D;
-	color: #fff;
-	display: inline-block;
-	font-size: 25px;
-	font-weight: bold;
-	line-height: 40px;
-    padding-left: 1.5rem;
-	padding-right: 1.5rem;
+  border-right: 1px solid #8d8d8d;
+  color: #fff;
+  display: inline-block;
+  font-size: 25px;
+  font-weight: bold;
+  line-height: 40px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 #header nav ul li:first-child {
-	border-left: 1px solid #8D8D8D;
+  border-left: 1px solid #8d8d8d;
+}
+ul li a {
+  color: white;
+  text-decoration: none;
 }
 </style>

@@ -9,13 +9,16 @@ export default new VueRouter({
   mode: "history",
   routes: [
     {
-      path: "/",
-      component: Article
-    },
-    {
-      path: "/article/:id",
-      name: "Article",
-      component: ArticleDetail,
+      path: "/article",
+      component: Article,
+      children: [
+        {
+          path: ":id",
+          name: "Article",
+          component: ArticleDetail,
+          props: true,
+        },
+      ],
     },
   ],
 });

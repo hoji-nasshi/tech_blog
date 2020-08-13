@@ -6,8 +6,8 @@
     <div id="wrapper">
       <div id="content">
         <div id="content_main">
-          <Article :info="info"></Article>
-          <router-view></router-view>
+          <router-view
+            :info="info"/>
         </div>
         <div id="content_sub">
           <Aside></Aside>
@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import Article from "./pages/Article.vue";
 import Header from "./pages/Header.vue";
 import Footer from "./pages/Footer.vue";
 import Aside from "./pages/Aside.vue";
@@ -28,7 +27,6 @@ import axios from "axios";
 export default {
   name: "App",
   components: {
-    Article,
     Header,
     Footer,
     Aside,

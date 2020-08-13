@@ -1,18 +1,28 @@
 <template>
-  <div v-if="this.info">
-    <article class="article" v-for="item in this.info.contents" :key="item.id">
-      <router-link :to="{name:'Article',params:{id:item.id}}">
-        <figure class="article-figure">
-          <img :src="item.thumbnail.url" />
-        </figure>
-        <div class="article-info">
-          <h1 class="article-title">{{ item.title }}</h1>
-          <span class="article-category">{{ item.tag }}</span>
-          <time class="article-date">{{ item.postedDate | dateFormat }}</time>
-          <p class="shortcut">{{ item.content }}</p>
-        </div>
-      </router-link>
-    </article>
+  <div>
+    <div v-if="this.info && this.$route.path == '/article'">
+      <article
+        class="article"
+        v-for="item in this.info.contents"
+        :key="item.id"
+        @click="onClick"
+      >
+        <router-link :to="{ name: 'Article', params: { id: item.id,item: item } }">
+          <figure class="article-figure">
+            <img :src="item.thumbnail.url" />
+          </figure>
+          <div class="article-info">
+            <h1 class="article-title">{{ item.title }}</h1>
+            <span class="article-category">{{ item.tag }}</span>
+            <time class="article-date">{{ item.postedDate | dateFormat }}</time>
+            <p class="shortcut">{{ item.content }}</p>
+          </div>
+        </router-link>
+      </article>
+    </div>
+    <div>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -32,35 +42,48 @@ export default {
       return value;
     },
   },
-  updated(){
+  updated() {
     // 枠から文字がはみださないように
     let targetElement = document.getElementsByClassName("shortcut");
 
-    for(let target of targetElement){
-      let targetHeight = Number(window.getComputedStyle(target).height.toString().slice(0,-2));
-      let targetText = target.textContent.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,''); // HTMLタグを除去して取得
+    for (let target of targetElement) {
+      let targetHeight = Number(
+        window
+          .getComputedStyle(target)
+          .height.toString()
+          .slice(0, -2)
+      );
+      let targetText = target.textContent.replace(
+        /<("[^"]*"|'[^']*'|[^'">])*>/g,
+        ""
+      ); // HTMLタグを除去して取得
 
       // 対象のElementのクローンを理想の形になるようブラッシュアップ。
       let clone = target.cloneNode(true);
-      clone.style.visibility  = "hidden";
-      clone.style.position    = "absolute";
-      clone.style.overflow    = "visible";
-      clone.style.width       = `${target.clientWidth}px`;
-      clone.style.height      = "auto";
+      clone.style.visibility = "hidden";
+      clone.style.position = "absolute";
+      clone.style.overflow = "visible";
+      clone.style.width = `${target.clientWidth}px`;
+      clone.style.height = "auto";
 
       target.insertAdjacentElement("afterend", clone);
 
-        // 理想の形になるまで文字を減らして調整。
-        while((targetText.length > 0) && (clone.clientHeight > targetHeight)) {
-          targetText = targetText.substr(0, targetText.length - 1);
-          clone.innerHTML = `${targetText}...`;
-        }
+      // 理想の形になるまで文字を減らして調整。
+      while (targetText.length > 0 && clone.clientHeight > targetHeight) {
+        targetText = targetText.substr(0, targetText.length - 1);
+        clone.innerHTML = `${targetText}...`;
+      }
       // 理想の形になったクローンを元Elementに置き換える。
       target.innerHTML = clone.innerHTML;
       // クローンさん、お疲れ様。
       clone.parentNode.removeChild(clone);
+      console.log(this.$route.path);
     }
-  }
+  },
+  methods: {
+    onClick(){
+    }
+  },
 };
 </script>
 
@@ -108,9 +131,9 @@ export default {
   margin-left: auto;
   margin-right: auto;
   line-height: 3em; /*縦にセンタリング */
-  height:3em;
-  font-size:1.2em;
-  background-color:azure;
+  height: 3em;
+  font-size: 1.2em;
+  background-color: azure;
 }
 /* ショートカットしたい箇所のcss */
 .shortcut {
@@ -130,6 +153,6 @@ export default {
 }
 /* 記事冒頭の紹介文 */
 .article-info p {
-  margin-top:0.5em;
+  margin-top: 0.5em;
 }
 </style>
