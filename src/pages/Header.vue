@@ -27,11 +27,9 @@ export default {};
 #header {
   height: 190px;
   min-width: 100%;
-  background-color: #000;
 }
 /* ヘッダートップ */
 #header_top {
-  background-color: #f8e81c;
   height: 130px;
   text-align: center;
 }
@@ -61,7 +59,7 @@ export default {};
 }
 #header nav ul li {
   border-right: 1px solid #8d8d8d;
-  color: #fff;
+  color:#000000;
   display: inline-block;
   font-size: 25px;
   font-weight: bold;
@@ -73,7 +71,7 @@ export default {};
   border-left: 1px solid #8d8d8d;
 }
 ul li a {
-  color: white;
+  color:#000000;
   text-decoration: none;
 }
 </style>

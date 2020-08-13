@@ -58,7 +58,6 @@ export default {
 <style>
 /* ラッパー部分 */
 #wrapper {
-  background-color: #89bfff;
   min-width: 100%;
 }
 /* コンテンツ部分 */
